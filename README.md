@@ -5,7 +5,7 @@ Validation of Employee Id, Mobile Number, Email id, Name and Designation
 
 Upcoming Commit :-
 Exception Handling 
-Various application.properties file activatio
+Various application.properties file activation
 Pagination 
 Actuator 
       
