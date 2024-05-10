@@ -1,6 +1,7 @@
 package com.example.SpringBootAssignment.service;
 
 import com.example.SpringBootAssignment.entity.Employee;
+import com.example.SpringBootAssignment.exception.ResourceNotFoundException;
 import com.example.SpringBootAssignment.repository.EmployeeRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployee(String employeeId) {
-        return employeeRespository.findById(employeeId).get();
+        return employeeRespository.findById(employeeId).orElseThrow(()-> new ResourceNotFoundException("Employee not found with ID : "+ employeeId));
     }
 
     public void addEmployee(Employee employee) {

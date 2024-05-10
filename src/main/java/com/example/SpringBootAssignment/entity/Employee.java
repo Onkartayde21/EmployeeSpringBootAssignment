@@ -12,9 +12,7 @@ import jakarta.validation.constraints.Size;
 
 public class Employee {
     @Id
-    @Column(unique = true)
-    @Size(max = 6, message = "Should not contain more than 6 numbers")
-    @Pattern(regexp = "\\d+", message = "Enter only numbers")
+    @Pattern(regexp = "\\d{6}", message = "Enter only numbers upto 6 decimals")
     private String EmployeeId;
     @NotBlank(message = "Employee Name is required")
     private String EmployeeName;
