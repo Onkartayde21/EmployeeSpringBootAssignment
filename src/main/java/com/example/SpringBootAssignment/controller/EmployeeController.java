@@ -1,11 +1,14 @@
 package com.example.SpringBootAssignment.controller;
 
 import com.example.SpringBootAssignment.entity.Employee;
+import com.example.SpringBootAssignment.repository.EmployeeRespository;
 import com.example.SpringBootAssignment.service.EmployeeService;
 import com.example.SpringBootAssignment.service.PropertiesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,6 +22,9 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @Autowired
+    private EmployeeRespository employeeRespository;
+
+    @Autowired
     private PropertiesService propertiesService;
 
     @GetMapping("/properties")
@@ -30,6 +36,13 @@ public class EmployeeController {
         return properties;
     }
 
+    @GetMapping("/employees/pages")
+    public List<Employee> getAllEmployees(@RequestParam(name = "page", defaultValue = "0") Integer page){
+        Integer size = 2;
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Employee> employeePage = employeeRespository.findAll(pageable);
+        return employeePage.getContent();
+    }
     @GetMapping("/employees")
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmployees();
@@ -44,6 +57,10 @@ public class EmployeeController {
     public  void addEmployee(@Valid @RequestBody Employee employee){
         employeeService.addEmployee(employee);
     }
+
+    /*@PatchMapping("/employees/{employeeId}")
+    public*/
+
     @PutMapping("/employees/{employeeId}")
     public void updateEmployee(@PathVariable String employeeId,@Valid @RequestBody Employee employee){
         employeeService.updateEmployee(employeeId, employee);

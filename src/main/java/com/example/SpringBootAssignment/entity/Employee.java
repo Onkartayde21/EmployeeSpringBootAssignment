@@ -8,19 +8,28 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+
 @Entity
 
 public class Employee {
     @Id
-    @Pattern(regexp = "\\d{6}", message = "Enter only numbers upto 6 decimals")
+    @Pattern(regexp = "\\d{6}", message = "Enter only numbers upto 6 digits")
+    @NotBlank
     private String EmployeeId;
+
     @NotBlank(message = "Employee Name is required")
     private String EmployeeName;
+
     @Column(unique = true)
     @Pattern(regexp = "\\d{10}", message = "Mobile number must be 10 digits only")
+    @NotBlank
     private String Mobile;
+
+    @Column(unique = true)
     @Email(message = "Email must be valid")
+    @NotBlank
     private String EmployeeEmail;
+
     @NotBlank(message = "Designation is required")
     private String Designation;
 
